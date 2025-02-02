@@ -6,6 +6,8 @@
 :root {
     --column-width: min(90vh, 70vw);
     --margin-width: calc((100vw - var(--column-width)) / 2);
+
+    --dark-gray:  rgb(27, 36, 48);
 }
 
 body {
@@ -16,11 +18,16 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
+nav {
+    background-color: var(--dark-gray);
+}
+
 .centered-column {
     margin-left: var(--margin-width);
     margin-right: var(--margin-width);
 }
 .card-container {
+    padding-top: 2em;
     display:grid;
     grid-template-columns: 1fr;
     gap: 1em;
