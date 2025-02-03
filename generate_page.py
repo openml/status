@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 from pathlib import Path
 import urllib.request
@@ -20,6 +21,21 @@ def default_check(url: str) -> tuple[str, str]:
         return ICON_ERROR, MSG_ERROR
     return ICON_OK, MSG_OK
 
+def elastic_search_check(url: str) -> tuple[str, str]:
+    response = urllib.request.urlopen(url)
+    if response.code != HTTPStatus.OK:
+        return ICON_ERROR, MSG_ERROR
+    status = json.load(response)
+    match status:
+        case {"status": "green"}:
+            return ICON_OK, MSG_OK
+        case {"status": "yellow", "unassigned_shards": n}:
+            return ICON_WARN, "Potentially degraded performance."
+        case {"status": "red", "unassigned_shards": n}:
+            return ICON_ERROR, "Index and search operations may fail."
+        case _:
+            return ICON_ERROR, "Unknown error while fetching cluster health."
+
 
 if __name__ == "__main__":
     template_page = Template(TEMPLATE_FILE.read_text())
@@ -29,7 +45,7 @@ if __name__ == "__main__":
         ("MINIO", "https://data.openml.org/minio/health/live"): default_check,
         ("REST", "https://www.openml.org/api/v1/json/evaluationmeasure/list"): default_check,
         ("TEST", "https://test.openml.org/"): default_check,
-        ("ES", "https://es.openml.org/"): default_check,
+        ("ES", "https://es.openml.org/_cluster/health?wait_for_status=yellow&timeout=10s&pretty"): elastic_search_check,
     }
 
     statuses = {}
