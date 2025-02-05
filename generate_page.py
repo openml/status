@@ -13,7 +13,7 @@ MSG_WARN = "Limited Availability"
 MSG_ERROR = "Unavailable"
 
 TEMPLATE_FILE = Path(__file__).parent / "status_page_template.html"
-OUTPUT_FILE = Path(__file__).parent / "build" / "status.html"
+OUTPUT_FILE = Path(__file__).parent / "build" / "index.html"
 
 def default_check(url: str) -> tuple[str, str]:
     response = urllib.request.urlopen(url)
