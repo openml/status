@@ -21,7 +21,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - run: python generate_page.py
+      - name: Generate Status Page
+        run: python generate_page.py
+      - name: Transfer Static Files
+        run: |
+          cp favicon.ico build/favicon.ico
+          cp style.css build/style.css
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
