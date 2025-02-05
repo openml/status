@@ -21,6 +21,14 @@ def default_check(url: str) -> tuple[str, str]:
         return ICON_ERROR, MSG_ERROR
     return ICON_OK, MSG_OK
 
+def frontend_check(url: str) -> tuple[str, str]:
+    response = urllib.request.urlopen(url)
+    if response.code != HTTPStatus.OK:
+        return ICON_ERROR, MSG_ERROR
+    if "<title>OpenML</title>" in response.fp.read().decode("utf-8"):
+        return ICON_OK, MSG_OK
+    return ICON_WARN, "Server reachable, website unavailable."
+
 def elastic_search_check(url: str) -> tuple[str, str]:
     response = urllib.request.urlopen(url)
     if response.code != HTTPStatus.OK:
@@ -41,10 +49,10 @@ if __name__ == "__main__":
     template_page = Template(TEMPLATE_FILE.read_text())
 
     checks = {
-        ("WEBSITE", "https://www.openml.org/"): default_check,
+        ("WEBSITE", "https://www.openml.org/"): frontend_check,
         ("MINIO", "https://data.openml.org/minio/health/live"): default_check,
         ("REST", "https://www.openml.org/api/v1/json/evaluationmeasure/list"): default_check,
-        ("TEST", "https://test.openml.org/"): default_check,
+        ("TEST", "https://test.openml.org/"): frontend_check,
         ("ES", "https://es.openml.org/_cluster/health?wait_for_status=yellow&timeout=10s&pretty"): elastic_search_check,
     }
 
@@ -57,5 +65,3 @@ if __name__ == "__main__":
     OUTPUT_FILE.write_text(
         template_page.substitute(**statuses)
     )
-
-
