@@ -1,3 +1,4 @@
+import datetime
 import json
 from http import HTTPStatus
 from pathlib import Path
@@ -61,7 +62,9 @@ if __name__ == "__main__":
         icon, msg = check(url)
         statuses.update({f"{name}_STATUS": msg, f"{name}_STATUS_ICON": icon})
 
-
+    now = datetime.datetime.now(datetime.timezone.utc)
+    timestamp = now.isoformat(sep=" ", timespec="seconds")
+    statuses["TIMESTAMP"] = timestamp[:-len("+00:00")]
     OUTPUT_FILE.write_text(
         template_page.substitute(**statuses)
     )
