@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8" />
   <title>OpenML Status</title>
@@ -7,51 +7,57 @@
   <link rel="icon"  href="favicon.ico" />
   <link href="style.css" rel="stylesheet"/>
 </head>
-<body>
-<nav>
-
-  <p style="color:floralwhite;font-size:1.5em;padding: 0.25em 0em;">
-    <img src="favicon.ico" style="display:inline;text-align: center; vertical-align: middle;"/>
-    OpenML
-  </p>
-
-</nav>
-<div class="centered-column card-container">
-  <div class="card">
-    <div>
-      <strong>Website</strong>
-      <p>${WEBSITE_STATUS}</p>
+<body class="flex-column">
+  <nav>
+    <p style="font-size:1.5em;padding: 0.25em 0em;">
+      <img src="favicon.ico" style="display:inline;text-align: center; vertical-align: middle;"/>
+      OpenML
+    </p>
+  </nav>
+  <div class="centered-column card-container">
+    <div class="card">
+      <div>
+        <strong>Website</strong>
+        <p>${WEBSITE_STATUS}</p>
+      </div>
+      <p class="align-right">${WEBSITE_STATUS_ICON}</p>
     </div>
-    <p class="align-right">${WEBSITE_STATUS_ICON}</p>
-  </div>
-  <div class="card">
-    <div>
-      <strong>REST API</strong>
-      <p>${REST_STATUS}</p>
+    <div class="card">
+      <div>
+        <strong>REST API</strong>
+        <p>${REST_STATUS}</p>
+      </div>
+      <p class="align-right">${REST_STATUS_ICON}</p>
     </div>
-    <p class="align-right">${REST_STATUS_ICON}</p>
-  </div>
-  <div class="card">
-    <div>
-      <strong>MinIO</strong>
-      <p>${MINIO_STATUS}</p>
+    <div class="card">
+      <div>
+        <strong>MinIO</strong>
+        <p>${MINIO_STATUS}</p>
+      </div>
+      <p class="align-right">${MINIO_STATUS_ICON}</p>
     </div>
-    <p class="align-right">${MINIO_STATUS_ICON}</p>
-  </div>
-  <div class="card">
-    <div>
-      <strong>Elastic Search</strong>
-      <p>${ES_STATUS}</p>
+    <div class="card">
+      <div>
+        <strong>Elastic Search</strong>
+        <p>${ES_STATUS}</p>
+      </div>
+      <p class="align-right">${ES_STATUS_ICON}</p>
     </div>
-    <p class="align-right">${ES_STATUS_ICON}</p>
-  </div>
-  <div class="card">
-    <div>
-      <strong>Test Server</strong>
-      <p>${TEST_STATUS}</p>
+    <div class="card">
+      <div>
+        <strong>Test Server</strong>
+        <p>${TEST_STATUS}</p>
+      </div>
+      <p class="align-right">${TEST_STATUS_ICON}</p>
     </div>
-    <p class="align-right">${TEST_STATUS_ICON}</p>
   </div>
-</div>
+  <footer class="align-bottom ">
+    <div class="centered-column footer-container">
+      <a href="https://github.com/openml/status" target="_blank">Source Code</a>
+      <p >
+        Last updated ${TIMESTAMP} UTC.
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
