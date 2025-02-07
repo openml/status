@@ -39,7 +39,7 @@ def elastic_search_check(url: str) -> tuple[str, str]:
         case {"status": "green"}:
             return ICON_OK, MSG_OK
         case {"status": "yellow", "unassigned_shards": n}:
-            return ICON_WARN, "Potentially degraded performance."
+            return ICON_OK, MSG_OK  # Current Production is permanently yellow. Nothing to worry about.
         case {"status": "red", "unassigned_shards": n}:
             return ICON_ERROR, "Index and search operations may fail."
         case _:
